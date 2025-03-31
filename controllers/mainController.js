@@ -47,7 +47,7 @@ module.exports = {
 
         const token = jwt.sign({ username: username, image: userExists.image }, process.env.SECRET_KEY)
 
-        return res.send({message: 'User logIn successfully', token, user:{username: userExists.username, image: userExists.image}});
+        return res.send({message: 'User logIn successfully', token, user:{username: userExists.username, image: userExists.image, email: userExists.email}});
     },
 
     getAllPosts: async (req, res) => {
