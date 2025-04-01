@@ -6,7 +6,7 @@ const {
     register,
     logIn, getAllPosts, getSinglePost, getMessages, sendMessage, getUsers, updateEmail, updateUsername,
     updateImage, confirmPassword, updatePassword, createPost, addToFavorites, getFavorites, addComment, getOnlineUser,
-    getSingleUser, getUserPosts
+    getSingleUser, getUserPosts, deletePost
 } = require('../controllers/mainController')
 
 const {
@@ -22,6 +22,7 @@ router.post('/register', validateRegister, register);
 router.post('/logIn', validateLogin, logIn);
 router.get('/AllPosts', getAllPosts);
 router.get('/posts/:id', getSinglePost);
+router.post('/deletePost', userAuth, deletePost);
 router.post('/addComment', userAuth, addComment);
 router.post('/createPost', userAuth, validateNewPost, createPost);
 router.get('/allUsers', getUsers);

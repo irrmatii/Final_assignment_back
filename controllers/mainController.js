@@ -63,6 +63,30 @@ module.exports = {
         return res.send({findPost, allComments});
     },
 
+    deletePost: async (req, res) => {
+        const {id, user} = req.body;
+
+        console.log("Id from frontend", id)
+
+        const findPost = await postDb.findOne({_id: id})
+
+        if (findPost.username === user.username) {
+            await postDb.deleteOne({_id: id})
+            const updatedPost = await postDb.find()
+
+            /* ==== Delete Comments ====*/
+            await commentDb.findOneAndDelete({postId: id})
+            /* ==== Delete Favorites ====*/
+            const testFavorites = await favoritesDb.updateMany({}, {$pull: {favorites: id}}, {new: true} )
+
+            console.log("Favorites deleted successfully", testFavorites)
+
+            res.send({message: "Post deleted successfully", updatedPost})
+        } else {
+            res.send({message: "This post is not yours"})
+        }
+    },
+
     addComment: async (req, res) => {
         const {message, postId, date, user} = req.body;
 
