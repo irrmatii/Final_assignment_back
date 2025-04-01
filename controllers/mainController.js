@@ -190,13 +190,10 @@ module.exports = {
 
         // ==== Updating favorites
         await favoritesDb.updateMany({username: user.username}, {$set: {username: username}})
-
         // ==== Updating posts
         await postDb.updateMany({username: user.username}, {$set: {username: username}})
-
         // ==== Updating Token
         const token = jwt.sign({ username: username, image: user.image }, process.env.SECRET_KEY)
-
         // ==== Updating comments
         await commentDb.updateMany({}, {$set: {'comments.$[].username': username}}, {new: true} )
 
@@ -230,10 +227,8 @@ module.exports = {
 
         // ==== Updating posts
         await postDb.updateMany({username: user.username}, {$set: {image: image}})
-
         // ==== Updating comments
         await commentDb.updateMany({}, {$set: {'comments.$[].image': image}}, {new: true} )
-
         // ==== Updating Token
         const token = jwt.sign({ username: user.username, image: image }, process.env.SECRET_KEY)
 
